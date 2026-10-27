@@ -13,5 +13,6 @@ Parameter ||--o{ Measurement
 Operator ||--o{ Measurement
 Parameter ||--o{ Specification
 Measurement ||--o| Deviation
-Batch }o--o{ Parameter : "через Измерение"
+' Связь M:N между партиями и параметрами разрешена ассоциативной
+' сущностью Measurement: Batch 1:N Measurement N:1 Parameter.
 @enduml
