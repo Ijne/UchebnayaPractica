@@ -53,7 +53,16 @@ def process(data):
     deviations = validate_measurements(batch, data["measurements"], data["specifications"])
     conflicts = assess_batch_conflicts(batch, data["measurements"], data["specifications"])
     protocol = form_batch_protocol(batch, data["measurements"], deviations)
-    return {"deviations": deviations, "conflicts": conflicts, "protocol": protocol}
+    return {
+        "deviations": deviations,
+        "conflicts": conflicts,
+        "protocol": protocol,
+        "reference_data": {
+            "raw_material_lots": data.get("raw_material_lots", []),
+            "parameters": data.get("parameters", []),
+            "operators": data.get("operators", []),
+        },
+    }
 
 
 def main(argv):
