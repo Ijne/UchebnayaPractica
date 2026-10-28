@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://example.org/potato-control">
+  <process id="Process_Potato" name="Контроль производства сухого картофельного пюре (AS-IS)" isExecutable="false">
+    <laneSet id="LaneSet_1">
+      <lane id="Lane_Operator" name="Оператор линии"><flowNodeRef>Start</flowNodeRef><flowNodeRef>RegisterBatch</flowNodeRef><flowNodeRef>RegisterMeasurements</flowNodeRef><flowNodeRef>CorrectProcess</flowNodeRef></lane>
+      <lane id="Lane_System" name="Информационная система"><flowNodeRef>ValidateMeasurements</flowNodeRef><flowNodeRef>Gateway_OK</flowNodeRef><flowNodeRef>AssessConflicts</flowNodeRef><flowNodeRef>FormProtocol</flowNodeRef></lane>
+      <lane id="Lane_Technologist" name="Технолог"><flowNodeRef>ReviewDeviation</flowNodeRef><flowNodeRef>ApproveProtocol</flowNodeRef><flowNodeRef>End</flowNodeRef></lane>
+    </laneSet>
+    <startEvent id="Start" name="Получена партия сырья"><outgoing>f1</outgoing></startEvent>
+    <userTask id="RegisterBatch" name="Зарегистрировать производственную партию"><incoming>f1</incoming><outgoing>f2</outgoing></userTask>
+    <userTask id="RegisterMeasurements" name="Зарегистрировать результаты контроля"><incoming>f2</incoming><incoming>f8</incoming><outgoing>f3</outgoing></userTask>
+    <serviceTask id="ValidateMeasurements" name="Проверить измерения по нормативам"><incoming>f3</incoming><outgoing>f4</outgoing></serviceTask>
+    <exclusiveGateway id="Gateway_OK" name="Есть отклонения?"><incoming>f4</incoming><outgoing>f5</outgoing><outgoing>f6</outgoing></exclusiveGateway>
+    <serviceTask id="AssessConflicts" name="Сопоставить параметры со спецификациями"><incoming>f6</incoming><outgoing>f7</outgoing></serviceTask>
+    <userTask id="ReviewDeviation" name="Рассмотреть отклонение"><incoming>f7</incoming><outgoing>f9</outgoing></userTask>
+    <userTask id="CorrectProcess" name="Выполнить корректирующее действие"><incoming>f9</incoming><outgoing>f8</outgoing></userTask>
+    <serviceTask id="FormProtocol" name="Сформировать электронный протокол партии"><incoming>f5</incoming><outgoing>f10</outgoing></serviceTask>
+    <userTask id="ApproveProtocol" name="Утвердить результат контроля"><incoming>f10</incoming><outgoing>f11</outgoing></userTask>
+    <endEvent id="End" name="Протокол утверждён"><incoming>f11</incoming></endEvent>
+    <sequenceFlow id="f1" sourceRef="Start" targetRef="RegisterBatch"/><sequenceFlow id="f2" sourceRef="RegisterBatch" targetRef="RegisterMeasurements"/><sequenceFlow id="f3" sourceRef="RegisterMeasurements" targetRef="ValidateMeasurements"/><sequenceFlow id="f4" sourceRef="ValidateMeasurements" targetRef="Gateway_OK"/><sequenceFlow id="f5" name="нет" sourceRef="Gateway_OK" targetRef="FormProtocol"/><sequenceFlow id="f6" name="да" sourceRef="Gateway_OK" targetRef="AssessConflicts"/><sequenceFlow id="f7" sourceRef="AssessConflicts" targetRef="ReviewDeviation"/><sequenceFlow id="f9" sourceRef="ReviewDeviation" targetRef="CorrectProcess"/><sequenceFlow id="f8" sourceRef="CorrectProcess" targetRef="RegisterMeasurements"/><sequenceFlow id="f10" sourceRef="FormProtocol" targetRef="ApproveProtocol"/><sequenceFlow id="f11" sourceRef="ApproveProtocol" targetRef="End"/>
+    <dataObject id="Data_Batch" name="Карточка партии"/><dataObjectReference id="DataRef_Batch" dataObjectRef="Data_Batch" name="Карточка партии"/>
+    <dataObject id="Data_Measurement" name="Измерения"/><dataObjectReference id="DataRef_Measurement" dataObjectRef="Data_Measurement" name="Измерения"/>
+    <dataObject id="Data_Spec" name="Спецификации"/><dataObjectReference id="DataRef_Spec" dataObjectRef="Data_Spec" name="Спецификации"/>
+    <dataObject id="Data_Protocol" name="Протокол"/><dataObjectReference id="DataRef_Protocol" dataObjectRef="Data_Protocol" name="Протокол"/>
+  </process>
+</definitions>

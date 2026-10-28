@@ -1,0 +1,17 @@
+@startuml
+hide methods
+entity "Партия" as Batch { * id <<PK>>; -- код; дата; статус; * raw_material_lot_id <<FK>> }
+entity "Партия сырья" as RawLot { * id <<PK>>; -- поставщик; сорт; дата_поступления }
+entity "Параметр" as Parameter { * id <<PK>>; -- наименование; единица }
+entity "Спецификация" as Specification { * id <<PK>>; -- * parameter_id <<FK>>; минимум; максимум; версия }
+entity "Измерение" as Measurement { * id <<PK>>; -- * batch_id <<FK>>; * parameter_id <<FK>>; * operator_id <<FK>>; значение; время }
+entity "Сотрудник" as Operator { * id <<PK>>; -- ФИО; роль }
+entity "Отклонение" as Deviation { * id <<PK>>; -- * measurement_id <<FK>>; причина; серьёзность; статус }
+RawLot ||--o{ Batch
+Batch ||--o{ Measurement
+Parameter ||--o{ Measurement
+Operator ||--o{ Measurement
+Parameter ||--o{ Specification
+Measurement ||--o| Deviation
+Batch }o--o{ Parameter : "через Измерение"
+@enduml
