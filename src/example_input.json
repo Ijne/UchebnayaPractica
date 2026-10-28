@@ -1,0 +1,11 @@
+{
+  "batch": {"id": "B-2026-001", "raw_material_lot": "P-42", "status": "контроль"},
+  "measurements": [
+    {"id": "M-1", "parameter_id": "moisture", "value": 7.8, "operator_id": "U-1"},
+    {"id": "M-2", "parameter_id": "temperature", "value": 91.0, "operator_id": "U-1"}
+  ],
+  "specifications": [
+    {"id": "S-1", "parameter_id": "moisture", "minimum": 5.0, "maximum": 8.0},
+    {"id": "S-2", "parameter_id": "temperature", "minimum": 70.0, "maximum": 85.0}
+  ]
+}
