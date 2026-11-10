@@ -1,0 +1,63 @@
+{
+  "raw_material_lots": [
+    {
+      "id": "P-42",
+      "supplier": "Поставщик А",
+      "variety": "Леди Клэр",
+      "received_at": "2026-10-28"
+    }
+  ],
+  "operators": [
+    {"id": "U-1", "name": "Оператор смены", "role": "лаборант"}
+  ],
+  "parameters": [
+    {"id": "moisture", "name": "Массовая доля влаги", "unit": "%"},
+    {"id": "temperature", "name": "Температура сушки", "unit": "°C"}
+  ],
+  "batch": {
+    "id": "B-2026-001",
+    "code": "СХП-001",
+    "date": "2026-10-28",
+    "raw_material_lot_id": "P-42",
+    "specification_id": "SP-2026.1",
+    "status": "контроль"
+  },
+  "measurements": [
+    {
+      "id": "M-1",
+      "batch_id": "B-2026-001",
+      "parameter_id": "moisture",
+      "value": 7.8,
+      "operator_id": "U-1",
+      "measured_at": "2026-10-28T10:15:00+03:00"
+    },
+    {
+      "id": "M-2",
+      "batch_id": "B-2026-001",
+      "parameter_id": "temperature",
+      "value": 91.0,
+      "operator_id": "U-1",
+      "measured_at": "2026-10-28T10:20:00+03:00"
+    }
+  ],
+  "specifications": [
+    {
+      "id": "SP-2025.4",
+      "version": "2025.4",
+      "effective_from": "2025-10-01",
+      "limits": [
+        {"id": "L-OLD-1", "parameter_id": "moisture", "minimum": 4.0, "maximum": 7.0},
+        {"id": "L-OLD-2", "parameter_id": "temperature", "minimum": 65.0, "maximum": 80.0}
+      ]
+    },
+    {
+      "id": "SP-2026.1",
+      "version": "2026.1",
+      "effective_from": "2026-01-15",
+      "limits": [
+        {"id": "L-1", "parameter_id": "moisture", "minimum": 5.0, "maximum": 8.0},
+        {"id": "L-2", "parameter_id": "temperature", "minimum": 70.0, "maximum": 85.0}
+      ]
+    }
+  ]
+}

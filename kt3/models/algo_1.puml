@@ -1,0 +1,27 @@
+@startuml
+skinparam shadowing false
+skinparam roundcorner 30
+rectangle "НАЧАЛО" as start
+parallelogram "Ввести партию, измерения и спецификации" as input
+rectangle "Найти назначенную партии спецификацию" as select
+rectangle "Построить словарь нормативов" as index
+diamond "Есть следующее измерение?" as next
+rectangle "Найти норматив параметра" as lookup
+diamond "Норматив найден?" as found
+diamond "Значение в допуске?" as range
+rectangle "Добавить отклонение\n«норматив не задан»" as missing
+rectangle "Добавить отклонение\n«значение вне допуска»" as out
+parallelogram "Вывести список отклонений" as output
+rectangle "КОНЕЦ" as stop
+start --> input --> select --> index --> next
+next --> lookup : да
+lookup --> found
+found --> missing : нет
+found --> range : да
+range --> next : да
+range --> out : нет
+missing --> next
+out --> next
+next --> output : нет
+output --> stop
+@enduml

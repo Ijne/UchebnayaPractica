@@ -1,0 +1,34 @@
+@startuml
+skinparam shadowing false
+skinparam roundcorner 30
+rectangle "НАЧАЛО" as start
+parallelogram "Ввести партию, измерения и спецификации" as input
+rectangle "Найти назначенную партии спецификацию" as select
+diamond "Есть следующее измерение?" as next_m
+rectangle "matched = false" as reset
+diamond "Есть следующий норматив?" as next_l
+diamond "Параметры совпадают?" as match
+rectangle "matched = true" as set_true
+diamond "Значение вне допуска?" as range
+rectangle "Добавить конфликт и расстояние" as add
+diamond "matched = false?" as unmatched
+rectangle "Добавить конфликт\n«норматив отсутствует»" as missing
+parallelogram "Вывести конфликты" as output
+rectangle "КОНЕЦ" as stop
+start --> input --> select --> next_m
+next_m --> reset : да
+reset --> next_l
+next_l --> match : да
+match --> next_l : нет
+match --> set_true : да
+set_true --> range
+range --> add : да
+range --> next_l : нет
+add --> next_l
+next_l --> unmatched : нет
+unmatched --> missing : да
+unmatched --> next_m : нет
+missing --> next_m
+next_m --> output : нет
+output --> stop
+@enduml
